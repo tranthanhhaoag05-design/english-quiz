@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English x IT Quiz - Neon Edition</title>
+    <style>
+        :root {
+            --bg-dark: #0a0a0c;
+            --bg-panel: #13141a;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff007f;
+            --neon-green: #39ff14;
+            --neon-yellow: #f1c40f;
+            --neon-red: #ff3333;
+            --text-main: #e0e0e0;
+            --text-muted: #8892b0;
+            --border-glow: 0 0 10px rgba(0, 243, 255, 0.5);
+            --pink-glow: 0 0 10px rgba(255, 0, 127, 0.5);
+            --green-glow: 0 0 10px rgba(57, 255, 20, 0.5);
+            --red-glow: 0 0 10px rgba(255, 51, 51, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Consolas', 'Segoe UI', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #0a0a0c 70%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--bg-panel);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ----- LOGO ----- */
+        .logo-container { text-align: center; margin-bottom: 30px; }
+        .logo {
+            font-size: 2.5em; font-weight: bold; color: #fff;
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 20px var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+        .logo span { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+
+        /* ----- FORMS ----- */
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block; margin-bottom: 8px; color: var(--neon-cyan); font-weight: bold;
+        }
+        .form-control {
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--text-muted); border-radius: 6px;
+            color: #fff; font-size: 1.1em; outline: none; transition: all 0.3s;
+        }
+        .form-control:focus { border-color: var(--neon-cyan); box-shadow: var(--border-glow); }
+        
+        .btn {
+            padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer;
+            font-size: 1.1em; font-weight: bold; text-transform: uppercase;
+            transition: all 0.3s ease; width: 100%; margin-top: 10px;
+        }
+        .btn-primary {
+            background: transparent; color: var(--neon-cyan); border: 2px solid var(--neon-cyan);
+            box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.2), 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+        .btn-primary:hover { background: var(--neon-cyan); color: var(--bg-dark); box-shadow: 0 0 20px var(--neon-cyan); }
+        
+        .btn-secondary {
+            background: transparent; color: var(--neon-pink); border: 2px solid var(--neon-pink);
+            box-shadow: inset 0 0 10px rgba(255, 0, 127, 0.2), 0 0 10px rgba(255, 0, 127, 0.2);
+        }
+        .btn-secondary:hover { background: var(--neon-pink); color: var(--bg-dark); box-shadow: 0 0 20px var(--neon-pink); }
+
+        .btn-success {
+            background: transparent; color: var(--neon-green); border: 2px solid var(--neon-green);
+            box-shadow: inset 0 0 10px rgba(57, 255, 20, 0.2), 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+        .btn-success:hover { background: var(--neon-green); color: var(--bg-dark); box-shadow: 0 0 20px var(--neon-green); }
+
+        .btn-warning {
+            background: transparent; color: var(--neon-yellow); border: 2px solid var(--neon-yellow);
+        }
+        .btn-warning:hover { background: var(--neon-yellow); color: var(--bg-dark); box-shadow: 0 0 20px var(--neon-yellow); }
+
+        .btn-danger {
+            background: rgba(231, 76, 60, 0.2); color: #e74c3c; border: 2px solid #e74c3c;
+        }
+        .btn-danger:hover { background: #e74c3c; color: #fff; box-shadow: 0 0 20px #e74c3c; }
+
+        .toggle-link {
+            text-align: center; margin-top: 20px; color: var(--text-muted);
+            cursor: pointer; text-decoration: underline;
+        }
+        .toggle-link:hover { color: var(--neon-cyan); }
+
+        /* ----- DASHBOARD ----- */
+        .dashboard-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 20px; margin-bottom: 30px;
+        }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .avatar {
+            font-size: 2.5em; background: rgba(0, 243, 255, 0.1);
+            padding: 10px; border-radius: 50%; box-shadow: var(--border-glow);
+        }
+        .user-details h3 { color: var(--neon-cyan); text-shadow: 0 0 5px var(--neon-cyan); }
+        .user-details p { color: var(--text-muted); font-size: 0.9em; }
+
+        .level-cards { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .card {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--text-muted);
+            border-radius: 8px; padding: 20px; cursor: pointer; transition: all 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .card:hover { border-color: var(--neon-cyan); box-shadow: var(--border-glow); transform: translateY(-2px); }
+        .card h2 { color: #fff; margin-bottom: 10px; }
+        .card-kha:hover { border-color: var(--neon-pink); box-shadow: var(--pink-glow); }
+        .card-kho:hover { border-color: var(--neon-green); box-shadow: var(--green-glow); }
+        .card-admin:hover { border-color: var(--neon-red); box-shadow: var(--red-glow); cursor: default; transform: none;}
+        
+        .progress-bar-container { width: 100%; height: 8px; background: #222; border-radius: 4px; margin-top: 15px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--neon-cyan); width: 0%; box-shadow: 0 0 10px var(--neon-cyan); transition: width 0.5s ease; }
+        .progress-text { position: absolute; top: 20px; right: 20px; font-weight: bold; color: var(--neon-cyan); }
+
+        /* ----- ADMIN USERS LIST ----- */
+        .admin-user-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .admin-user-card h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .admin-user-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 5px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        /* ----- TEST SELECTION ----- */
+        .test-list { display: flex; flex-direction: column; gap: 15px; }
+        .test-item {
+            display: flex; justify-content: space-between; align-items: center; padding: 15px;
+            border: 1px solid rgba(0, 243, 255, 0.3); border-radius: 6px; background: rgba(0, 243, 255, 0.05);
+        }
+        .test-item.completed { border-color: var(--neon-green); background: rgba(57, 255, 20, 0.05); }
+        .test-item.completed span { color: var(--neon-green); text-shadow: 0 0 5px var(--neon-green); }
+
+        /* ----- QUIZ UI ----- */
+        .quiz-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px; color: var(--neon-pink); font-weight: bold; text-shadow: 0 0 5px var(--neon-pink);
+        }
+        .question { font-size: 1.3em; margin-bottom: 20px; color: #fff; }
+        .option {
+            padding: 15px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--text-muted);
+            border-radius: 8px; cursor: pointer; margin-bottom: 12px; transition: all 0.2s;
+        }
+        .option:hover:not(.disabled) { border-color: var(--neon-cyan); box-shadow: inset 0 0 10px rgba(0,243,255,0.1); }
+        .option.selected { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-cyan); box-shadow: var(--border-glow); }
+        .option.correct { background: rgba(57, 255, 20, 0.1); border-color: var(--neon-green); color: var(--neon-green); box-shadow: var(--green-glow); }
+        .option.wrong { background: rgba(255, 0, 127, 0.1); border-color: var(--neon-pink); color: var(--neon-pink); box-shadow: var(--pink-glow); }
+        .option.disabled { cursor: not-allowed; }
+
+        .hint-box, .explanation-box {
+            margin-top: 20px; padding: 15px; border-radius: 6px; display: none; background: rgba(255, 255, 255, 0.05);
+        }
+        .hint-box { border-left: 4px solid var(--neon-cyan); }
+        .explanation-box { border-left: 4px solid var(--neon-green); }
+
+        .btn-group { display: flex; justify-content: space-between; margin-top: 25px; gap: 15px; }
+        .btn-group .btn { margin-top: 0; width: auto; flex: 1; }
+
+        /* ----- REVIEW & RESULTS ----- */
+        .review-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--text-muted);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .review-card.unanswered { border-color: var(--neon-yellow); }
+        .review-card h4 { color: #fff; margin-bottom: 10px; font-size: 1.1em; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;}
+        .review-topic { color: var(--neon-cyan); margin-bottom: 5px; }
+        .review-detail { color: var(--text-muted); font-size: 0.95em; margin-bottom: 5px; }
+        .review-highlight { color: var(--neon-green); margin-top: 10px; padding: 10px; background: rgba(57, 255, 20, 0.05); border-radius: 4px;}
+        
+        .text-correct { color: var(--neon-green); font-weight: bold; text-shadow: 0 0 5px var(--neon-green); }
+        .text-wrong { color: var(--neon-pink); font-weight: bold; text-shadow: 0 0 5px var(--neon-pink); }
+        .text-warning { color: var(--neon-yellow); font-weight: bold; text-shadow: 0 0 5px var(--neon-yellow); }
+
+        /* SCREENS */
+        .screen { display: none; }
+        .screen.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        #congrats-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 12, 0.95); display: none; justify-content: center; align-items: center;
+            flex-direction: column; z-index: 1000; text-align: center;
+        }
+        .congrats-text {
+            font-size: 3em; color: var(--neon-green);
+            text-shadow: 0 0 20px var(--neon-green), 0 0 40px var(--neon-green);
+            margin-bottom: 20px; animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+<div class="logo-container">
+    <div class="logo">&lt;Eng<span>IT/&gt;</span></div>
+</div>
+
+<div class="container">
+    <!-- SCREEN 1: LOGIN -->
+    <div id="login-screen" class="screen active">
+        <h2 style="text-align:center; color: var(--neon-cyan); margin-bottom: 20px;">&gt;_ ĐĂNG NHẬP HỆ THỐNG</h2>
+        <div class="form-group">
+            <label>Mã số sinh viên (hoặc Tên đăng nhập)</label>
+            <input type="text" id="login-mssv" class="form-control" placeholder="Nhập MSSV">
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <input type="password" id="login-password" class="form-control" placeholder="Nhập mật khẩu">
+        </div>
+        <button class="btn btn-primary" onclick="login()">Truy cập</button>
+        <div class="toggle-link" onclick="switchScreen('register-screen')">Chưa có tài khoản? Đăng ký ngay.</div>
+        <div class="toggle-link" style="color: var(--neon-yellow); margin-top: 10px;" onclick="forgotPassword()">Quên mật khẩu?</div>
+    </div>
+
+    <!-- SCREEN 2: REGISTER -->
+    <div id="register-screen" class="screen">
+        <h2 style="text-align:center; color: var(--neon-pink); margin-bottom: 20px;">&gt;_ ĐĂNG KÝ TÀI KHOẢN</h2>
+        <div class="form-group">
+            <label>Mã số sinh viên</label>
+            <input type="text" id="reg-mssv" class="form-control" placeholder="Nhập MSSV">
+        </div>
+        <div class="form-group">
+            <label>Họ và tên</label>
+            <input type="text" id="reg-name" class="form-control" placeholder="Nhập Họ Tên">
+        </div>
+        <div class="form-group">
+            <label>Giới tính</label>
+            <select id="reg-gender" class="form-control" style="background: #13141a;">
+                <option value="nam">Nam</option>
+                <option value="nu">Nữ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu</label>
+            <input type="password" id="reg-password" class="form-control" placeholder="Nhập mật khẩu">
+        </div>
+        <button class="btn btn-secondary" onclick="register()">Khởi tạo dữ liệu</button>
+        <div class="toggle-link" onclick="switchScreen('login-screen')">Đã có tài khoản? Đăng nhập.</div>
+    </div>
+
+    <!-- SCREEN 3: DASHBOARD -->
+    <div id="dashboard-screen" class="screen">
+        <div class="dashboard-header">
+            <div class="user-info">
+                <div class="avatar" id="user-avatar">👨‍💻</div>
+                <div class="user-details">
+                    <h3 id="user-name">Nguyễn Văn A</h3>
+                    <p id="user-mssv">MSSV: 123456</p>
+                </div>
+            </div>
+            <button class="btn btn-secondary" style="width: auto; margin:0;" onclick="logout()">Thoát</button>
+        </div>
+        <h2 style="margin-bottom: 20px; color: #fff;">Chọn Cấp Độ Thi</h2>
+        <div class="level-cards">
+            <div class="card" onclick="openLevel('trungbinh')">
+                <h2>Cấp độ: Trung Bình</h2>
+                <div class="progress-text" id="prog-text-trungbinh">0%</div>
+                <div class="progress-bar-container"><div class="progress-bar" id="prog-bar-trungbinh"></div></div>
+            </div>
+            <div class="card card-kha" onclick="openLevel('kha')">
+                <h2 style="color: var(--neon-pink)">Cấp độ: Khá</h2>
+                <div class="progress-text" id="prog-text-kha" style="color: var(--neon-pink)">0%</div>
+                <div class="progress-bar-container"><div class="progress-bar" id="prog-bar-kha" style="background: var(--neon-pink); box-shadow: var(--pink-glow);"></div></div>
+            </div>
+            <div class="card card-kho" onclick="openLevel('kho')">
+                <h2 style="color: var(--neon-green)">Cấp độ: Khó</h2>
+                <div class="progress-text" id="prog-text-kho" style="color: var(--neon-green)">0%</div>
+                <div class="progress-bar-container"><div class="progress-bar" id="prog-bar-kho" style="background: var(--neon-green); box-shadow: var(--green-glow);"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 4: ADMIN DASHBOARD (HIDDEN) -->
+    <div id="admin-screen" class="screen">
+        <div class="dashboard-header">
+            <div class="user-info">
+                <div class="avatar" style="box-shadow: 0 0 10px #e74c3c; background: rgba(231,76,60,0.1);">👑</div>
+                <div class="user-details">
+                    <h3 style="color: #e74c3c; text-shadow: 0 0 5px #e74c3c;">ADMIN: Thanh Hào</h3>
+                    <p>Hệ thống Quản trị & Thống kê</p>
+                </div>
+            </div>
+            <button class="btn btn-danger" style="width: auto; margin:0;" onclick="logout()">Thoát</button>
+        </div>
+        
+        <h2 style="color: var(--neon-cyan); margin-bottom: 20px;">📊 Thống Kê Tổng Quan</h2>
+        <div class="level-cards">
+            <!-- Thông số chung -->
+            <div class="card card-admin" style="border-color: var(--neon-cyan);">
+                <h3 style="color: var(--neon-cyan); border-bottom: 1px solid rgba(0,243,255,0.3); padding-bottom: 10px; margin-bottom: 15px;">🌐 Lưu Lượng Truy Cập</h3>
+                <p style="font-size: 1.2em; margin-bottom: 10px;">👥 Tổng Số Người Đăng Ký: <span id="admin-total-users" style="color:#fff; font-weight:bold; font-size: 1.3em; margin-left:10px;">0</span></p>
+                <p style="font-size: 1.2em;">🔑 Tổng Số Lượt Đăng Nhập: <span id="admin-total-logins" style="color:#fff; font-weight:bold; font-size: 1.3em; margin-left:10px;">0</span></p>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <div class="card card-admin" style="border-color: #fff; padding: 15px;">
+                    <h4 style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 5px; margin-bottom: 10px;">Trung Bình</h4>
+                    <p>📝 Đã làm: <span id="admin-tb-attempted" class="text-warning" style="font-weight:bold;">0</span></p>
+                    <p>✅ Đúng: <span id="admin-tb-correct" class="text-correct" style="font-weight:bold;">0</span></p>
+                </div>
+                <div class="card card-admin" style="border-color: var(--neon-pink); padding: 15px;">
+                    <h4 style="color: var(--neon-pink); border-bottom: 1px solid rgba(255,0,127,0.3); padding-bottom: 5px; margin-bottom: 10px;">Khá</h4>
+                    <p>📝 Đã làm: <span id="admin-kha-attempted" class="text-warning" style="font-weight:bold;">0</span></p>
+                    <p>✅ Đúng: <span id="admin-kha-correct" class="text-correct" style="font-weight:bold;">0</span></p>
+                </div>
+                <div class="card card-admin" style="border-color: var(--neon-green); padding: 15px;">
+                    <h4 style="color: var(--neon-green); border-bottom: 1px solid rgba(57,255,20,0.3); padding-bottom: 5px; margin-bottom: 10px;">Khó</h4>
+                    <p>📝 Đã làm: <span id="admin-kho-attempted" class="text-warning" style="font-weight:bold;">0</span></p>
+                    <p>✅ Đúng: <span id="admin-kho-correct" class="text-correct" style="font-weight:bold;">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DANH SÁCH CHI TIẾT NGƯỜI DÙNG -->
+        <h3 style="color: var(--neon-yellow); margin-top: 30px; border-bottom: 1px solid rgba(241,196,15,0.3); padding-bottom: 10px; margin-bottom: 20px;">📋 Danh Sách Sinh Viên Đã Đăng Ký</h3>
+        <div id="admin-users-list" style="display: flex; flex-direction: column; max-height: 50vh; overflow-y: auto; padding-right: 5px;">
+            <!-- Danh sách người dùng được render ở đây -->
+        </div>
+    </div>
+
+    <!-- SCREEN 4: TEST SELECTION -->
+    <div id="test-select-screen" class="screen">
+        <button class="btn btn-warning" style="width:auto; margin-bottom: 20px; padding: 8px 15px;" onclick="switchScreen('dashboard-screen')">🔙 Quay lại</button>
+        <h2 id="current-level-title" style="margin-bottom: 20px; color: var(--neon-cyan);">Cấp độ: ...</h2>
+        <div class="test-list">
+            <div class="test-item" id="btn-de-1">
+                <span>Đề 1 (20 câu)</span>
+                <button class="btn btn-primary" style="width: auto; margin:0; padding: 8px 15px;" onclick="startQuiz(1)">Làm Bài</button>
+            </div>
+            <div class="test-item" id="btn-de-2">
+                <span>Đề 2 (20 câu)</span>
+                <button class="btn btn-primary" style="width: auto; margin:0; padding: 8px 15px;" onclick="startQuiz(2)">Làm Bài</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: QUIZ -->
+    <div id="quiz-screen" class="screen">
+        <div class="quiz-header">
+            <div>
+                <span id="quiz-progress" style="margin-right: 15px;">Câu 1 / 20</span>
+                <span id="quiz-score" style="color: #fff;">Điểm: 0</span>
+            </div>
+            <button class="btn btn-danger" id="btn-submit-early" style="display:none; width:auto; margin:0; padding: 5px 15px; font-size: 0.9em;" onclick="submitQuiz()">Nộp Bài Sớm ➔</button>
+        </div>
+        <div class="question" id="quiz-question">Đang tải câu hỏi...</div>
+        <div class="options" id="quiz-options"></div>
+        
+        <div class="hint-box" id="quiz-hint-box">
+            <strong style="color:var(--neon-cyan)">💡 Tư duy:</strong> <span id="quiz-hint"></span>
+        </div>
+        <div class="explanation-box" id="quiz-exp-box">
+            <strong style="color:var(--neon-green)">📖 Giải thích:</strong> <span id="quiz-exp"></span>
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn btn-warning" id="btn-hint" onclick="toggleHint()">💡 Gợi ý</button>
+            <button class="btn btn-primary" id="btn-check" onclick="checkAnswer()" style="display: none;">Kiểm tra</button>
+            <button class="btn btn-success" id="btn-next" onclick="nextQuestion()" style="display: none;">Tiếp Theo ➔</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 6: RESULT MENU -->
+    <div id="result-screen" class="screen">
+        <h1 style="color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); margin-bottom: 10px;">HOÀN THÀNH ĐỀ THI!</h1>
+        <h2 id="final-score" style="text-align: center; margin-bottom: 30px; color: #fff; font-size: 2.5em;"></h2>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <button class="btn btn-success" onclick="showDetailedScore()">📊 Xem Điểm Chi Tiết (20 Câu)</button>
+            <button class="btn btn-secondary" onclick="showReviewLesson()">📚 Xem Bài Ôn (Tóm tắt lý thuyết)</button>
+            <button class="btn btn-warning" style="margin-top: 15px;" onclick="finishTest()">🔙 Quay lại Menu Chọn Đề</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 7: DETAILED SCORE -->
+    <div id="detailed-score-screen" class="screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="color: var(--neon-green);">📊 Điểm Chi Tiết</h2>
+            <button class="btn btn-warning" style="width:auto; margin:0; padding: 5px 15px;" onclick="switchScreen('result-screen')">🔙 Quay lại</button>
+        </div>
+        <div id="detailed-score-container" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;"></div>
+    </div>
+
+    <!-- SCREEN 8: REVIEW LESSON -->
+    <div id="review-lesson-screen" class="screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="color: var(--neon-pink);">📚 Tổng Ôn Lý Thuyết</h2>
+            <button class="btn btn-warning" style="width:auto; margin:0; padding: 5px 15px;" onclick="switchScreen('result-screen')">🔙 Quay lại</button>
+        </div>
+        <div id="review-lesson-container" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;"></div>
+    </div>
+</div>
+
+<!-- CONGRATS OVERLAY -->
+<div id="congrats-overlay">
+    <div class="congrats-text">🎉 CHÚC MỪNG 🎉</div>
+    <h2 style="color: #fff; margin-bottom: 30px;">Bạn đã hoàn thành 100% tất cả các cấp độ!</h2>
+    <p style="color: var(--neon-cyan); margin-bottom: 30px;">Kỹ năng Tiếng Anh & IT của bạn thật tuyệt vời!</p>
+    <button class="btn btn-primary" style="max-width: 200px;" onclick="document.getElementById('congrats-overlay').style.display='none'">Đóng</button>
+</div>
+
+<script>
+    // --- TOPIC KNOWLEDGE DATA (TÓM TẮT LÝ THUYẾT) ---
+    const topicData = {
+        PastSimple: { title: "Thì Quá khứ đơn (Past Simple)", form: "S + V2/ed / S + was/were", signs: "yesterday, last week, ago, in 2024", summary: "Diễn tả hành động đã xảy ra và kết thúc hoàn toàn trong quá khứ." },
+        PresentContinuous: { title: "Thì Hiện tại tiếp diễn (Present Continuous)", form: "S + am/is/are + V-ing", signs: "now, right now, at the moment, Look!", summary: "Diễn tả hành động đang diễn ra tại thời điểm nói hoặc tình huống mang tính tạm thời." },
+        PresentPerfect: { title: "Thì Hiện tại hoàn thành (Present Perfect)", form: "S + have/has + V3/ed", signs: "just, already, yet, since, for, ever, never", summary: "Diễn tả hành động bắt đầu trong quá khứ kéo dài đến hiện tại, hoặc kinh nghiệm." },
+        WhQuestion: { title: "Câu hỏi từ để hỏi (Wh- Questions)", form: "Wh-word + trợ động từ / be + S + V?", signs: "Why, Where, When, What, How", summary: "Dùng để lấy thông vị cụ thể, cần chọn từ để hỏi đúng ngữ cảnh." },
+        VocabTravel: { title: "Từ vựng: Du lịch (Travel & Tourism)", form: "Danh từ, cụm từ du lịch", signs: "suitcase, passport, set off, accommodation", summary: "Cách dùng từ chính xác liên quan đến hành trình, đồ đạc và thủ tục đi lại." },
+        VocabMoney: { title: "Từ vựng: Tiền bạc (Money & Mua sắm)", form: "Từ vựng tài chính cá nhân", signs: "afford, borrow, lend, discount, balance, owe", summary: "Lưu ý phân biệt rõ ràng góc độ giữa lend (cho vay) và borrow (đi vay)." },
+        Collocation: { title: "Cụm từ cố định (Make / Do / Give)", form: "Động từ đi kèm danh từ", signs: "make a joke, do volunteer work, give a tip", summary: "Sự kết hợp từ theo thói quen bản ngữ, không dịch từng từ đơn lẻ." },
+        Adjective: { title: "Tính từ miêu tả (Common Adjectives)", form: "Tính từ gốc hoặc đuôi -ed/-ing", signs: "boring/bored, strange, perfect, awful", summary: "Đuôi -ed chỉ cảm xúc con người, đuôi -ing chỉ tính chất của sự vật, sự việc." },
+        Comparative: { title: "Cấu trúc So sánh hơn (Comparatives)", form: "Adj-er + than / more + Adj + than", signs: "than, much, a lot", summary: "Dùng để đối chiếu tính chất giữa hai thực thể riêng biệt." },
+        Preposition: { title: "Giới từ & Từ nối (Prepositions & Connectors)", form: "in, on, at, look for / because, so, but", signs: "good at, listen to / because (lý do), so (kết quả)", summary: "Kết nối các thành phần câu logic, hoặc đi liền theo cụm động từ." },
+        
+        // CÁC CHỦ ĐIỂM MỚI UNIT 4
+        FutureArrangement: { title: "Hiện tại tiếp diễn chỉ tương lai (Future Arrangements)", form: "S + am/is/are + V-ing (+ thời gian tương lai)", signs: "tomorrow, tonight, this weekend (đã lên lịch, đặt chỗ)", summary: "Diễn tả một sự sắp xếp chắc chắn trong tương lai, thường đã có cuộc hẹn hoặc đặt lịch trước." },
+        FutureIntention: { title: "Cấu trúc Going to chỉ dự định (Future Intentions)", form: "S + am/is/are + going to + V (nguyên mẫu)", signs: "intend to, plan to, quyết định trước khi nói", summary: "Diễn tả dự định, dự kiến hoặc kế hoạch trong tương lai nhưng chưa hẳn đã đặt lịch cụ thể." },
+        WillWonShall: { title: "Cấu trúc Will / Won't / Shall (Offers & Promises)", form: "S + will/won't + V / Shall we + V...?", signs: "I promise, I'll, quyết định ngay lúc nói", summary: "Dùng để đưa ra quyết định tức thời, lời hứa (will/won't) hoặc lời đề nghị lịch sự (Shall we...?)." },
+        VocabClothes: { title: "Từ vựng: Quần áo & Diện mạo (Clothes & Appearance)", form: "Danh từ trang phục, phụ kiện", signs: "tights, bracelet, earrings, tie, scarf, tracksuit", summary: "Các từ vựng miêu tả chi tiết trang phục, phụ kiện đeo trên người và diện mạo." },
+        PhrasalVerbLook: { title: "Cụm động từ với 'LOOK' (Wordpower LOOK)", form: "look + giới từ/trạng từ", signs: "look after, look forward to, look up, look around", summary: "Sự thay đổi ngữ nghĩa hoàn toàn của động từ LOOK khi đi cùng các giới từ khác nhau." }
+    };
+
+    function makeQ(topic, q, options, a, hint, exp) {
+        return { topic: topic, q: q, options: options, a: a, hint: hint, exp: exp, reviewObj: topicData[topic] };
+    }
+
+    // --- KHỞI TẠO BỘ 120 CÂU HỎI HOÀN TOÀN KHÁC BIỆT (ĐÃ TÍCH HỢP UNIT 4) ---
+    const allQs = [];
+
+    // 1. Past Simple (8 câu)
+    allQs.push(makeQ("PastSimple", "Where ______ you meet him yesterday?", ["do", "are", "did", "were"], 2, "Cần trợ động từ quá khứ đi với động từ thường 'meet'.", "Hành động trong quá khứ có mốc 'yesterday' và động từ thường nên dùng 'did'."));
+    allQs.push(makeQ("PastSimple", "Before Danny became the 'Yes Man', his life ______ very boring.", ["is", "was", "were", "has been"], 1, "To be ở quá khứ đi với chủ ngữ số ít.", "Chủ ngữ số ít 'his life' đi với 'was' ở quá khứ đơn."));
+    allQs.push(makeQ("PastSimple", "He ______ to make things more exciting by saying yes.", ["decides", "deciding", "decided", "was deciding"], 2, "Động từ có quy tắc chia ở quá khứ đơn.", "Động từ 'decide' thêm đuôi -ed thành 'decided'."));
+    allQs.push(makeQ("PastSimple", "Two Swedish tourists ______ on holiday in Italy last summer.", ["was", "are", "were", "is"], 2, "To be quá khứ chia theo chủ ngữ số nhiều.", "Chủ ngữ số nhiều 'Two tourists' đi với 'were'."));
+    allQs.push(makeQ("PastSimple", "On my fiftieth birthday, I ______ to buy drinks for everyone.", ["have decided", "was deciding", "decided", "decide"], 2, "Mốc thời gian xác định đã chấm dứt hoàn toàn.", "Dùng quá khứ đơn 'decided' cho mốc sinh nhật lần thứ 50."));
+    allQs.push(makeQ("PastSimple", "I ______ a man lying in the street a few weeks ago.", ["see", "saw", "seen", "have seen"], 1, "Quá khứ bất quy tắc của động từ 'see'.", "Dấu hiệu 'ago' chỉ quá khứ đơn, dạng V2 của see là 'saw'."));
+    allQs.push(makeQ("PastSimple", "When _____ you arrive at the airport last night?", ["do", "are", "have", "did"], 3, "Trợ động từ dùng trong câu hỏi quá khứ.", "Dấu hiệu 'last night' yêu cầu trợ động từ 'did'."));
+    allQs.push(makeQ("PastSimple", "She _____ to the party yesterday because she felt exhausted.", ["doesn't go", "didn't go", "isn't going", "wasn't gone"], 1, "Phủ định của động từ thường ở quá khứ.", "Cấu trúc phủ định quá khứ đơn: didn't + V nguyên mẫu."));
+
+    // 2. Present Continuous (8 câu)
+    allQs.push(makeQ("PresentContinuous", "I ______ a blog right now so my friends know my news.", ["writes", "am writing", "wrote", "writing"], 1, "Hành động đang tiếp diễn ngay tại thời điểm nói.", "Dấu hiệu 'right now' đi với cấu trúc hiện tại tiếp diễn: am writing."));
+    allQs.push(makeQ("PresentContinuous", "Look! The children ______ football in the garden.", ["play", "played", "are playing", "playing"], 2, "Từ gây chú ý 'Look!' báo hiệu hành động đang diễn ra.", "Hành động đang tiếp diễn xung quanh thời điểm nói nên chọn 'are playing'."));
+    allQs.push(makeQ("PresentContinuous", "Listen! The bird ______ a beautiful melody.", ["sings", "is singing", "sang", "sung"], 1, "Dấu hiệu 'Listen!' yêu cầu chia tiếp diễn.", "Chủ ngữ số ít 'the bird' đi với 'is singing'."));
+    allQs.push(makeQ("PresentContinuous", "Why _____ you _____ at the moment? What happened?", ["do / cry", "did / cry", "are / crying", "have / cried"], 2, "Hỏi về trạng thái đang xảy ra ngay lúc này.", "Dấu hiệu 'at the moment' đi với cấu trúc 'are you crying'."));
+    allQs.push(makeQ("PresentContinuous", "I can't answer, I _____ a car through heavy traffic right now.", ["drive", "am driving", "drove", "was driving"], 1, "Lý do bận rộn ngay tại thời điểm hiện tại.", "Hành động đang làm ngay lúc nói: 'am driving'."));
+    allQs.push(makeQ("PresentContinuous", "They _____ a movie right now; they are working on code.", ["don't watch", "aren't watching", "didn't watch", "haven't watched"], 1, "Phủ định hành động tiếp diễn hiện tại.", "Cấu trúc phủ định tiếp diễn: aren't watching."));
+    allQs.push(makeQ("PresentContinuous", "_____ she _____ a red coat today?", ["Does / wear", "Is / wearing", "Did / wear", "Has / worn"], 1, "Tình huống tạm thời chỉ xảy ra trong ngày hôm nay.", "Hành động mang tính tạm thời 'today' chia hiện tại tiếp diễn: Is wearing."));
+    allQs.push(makeQ("PresentContinuous", "Hurry up! Everyone _____ in the meeting room for you.", ["waits", "waited", "is waiting", "are waiting"], 2, "Lệnh hối thúc chứng tỏ sự việc đang diễn ra. Đại từ số ít.", "'Everyone' tính là ngôi số ít, đi với 'is waiting'."));
+
+    // 3. Present Perfect (8 câu)
+    allQs.push(makeQ("PresentPerfect", "I ______ to Haiti three times to do volunteer work.", ["went", "have been", "go", "was"], 1, "Trải nghiệm lặp lại nhiều lần tính đến hiện tại.", "Dùng hiện tại hoàn thành chỉ trải nghiệm lặp lại: 'have been'."));
+    allQs.push(makeQ("PresentPerfect", "I've ______ spent my salary this month. I have no money left!", ["yet", "just", "already", "never"], 2, "Sự việc hoàn thành sớm hơn mong đợi.", "'already' dùng trong câu khẳng định chỉ việc đã xong."));
+    allQs.push(makeQ("PresentPerfect", "I bought a new mobile last month, but I haven't used it ______.", ["just", "already", "yet", "ever"], 2, "Trạng từ đứng cuối câu phủ định của hiện tại hoàn thành.", "'yet' đứng cuối câu phủ định mang nghĩa là vẫn chưa."));
+    allQs.push(makeQ("PresentPerfect", "Sorry, he's ______ left - he was here a minute ago.", ["already", "just", "yet", "never"], 1, "Hành động vừa mới xảy ra cách đây tích tắc.", "'just' chỉ hành động vừa mới xảy ra xong."));
+    allQs.push(makeQ("PresentPerfect", "I have _____ eaten raw fish before. This is my first time.", ["ever", "never", "yet", "already"], 1, "Kinh nghiệm chưa bao giờ làm gì tính đến nay.", "'never' chỉ việc chưa từng làm trong đời."));
+    allQs.push(makeQ("PresentPerfect", "Have you _____ written a mobile application by yourself?", ["ever", "never", "yet", "just"], 0, "Câu hỏi kinh nghiệm trong đời.", "'ever' dùng trong câu hỏi mang nghĩa đã từng bao giờ chưa."));
+    allQs.push(makeQ("PresentPerfect", "She has worked as a database engineer _____ 2020.", ["for", "since", "in", "from"], 1, "Đi kèm mốc thời gian cố định trong quá khứ.", "'since' + mốc thời gian."));
+    allQs.push(makeQ("PresentPerfect", "We have collaborated on this IT project _____ three months.", ["for", "since", "during", "ago"], 0, "Đi kèm khoảng thời gian đo đếm được.", "'for' + khoảng thời gian."));
+
+    // 4. WhQuestion (8 câu)
+    allQs.push(makeQ("WhQuestion", "_____ are you late for the team scrum meeting?", ["Why", "Where", "When", "Who"], 0, "Từ hỏi nguyên do, lý do.", "'Why' hỏi lý do (Tại sao bạn đến trễ?)."));
+    allQs.push(makeQ("WhQuestion", "_____ is your full name? - It's Tran Thanh Hao.", ["What", "Where", "When", "Why"], 0, "Hỏi thông tin định danh cơ bản.", "'What' dùng để hỏi tên/thông tin sự vật."));
+    allQs.push(makeQ("WhQuestion", "_____ do you usually commit your code, morning or night?", ["Who", "When", "Where", "How"], 1, "Hỏi về thời điểm, thời gian hành động.", "'When' dùng để hỏi khi nào."));
+    allQs.push(makeQ("WhQuestion", "_____ did you work with on the frontend design yesterday?", ["Who", "Whose", "What", "When"], 0, "Hỏi đối tượng con người.", "'Who' dùng để hỏi ai."));
+    allQs.push(makeQ("WhQuestion", "_____ IDE is this? Is it yours or Tuan Anh's?", ["Who", "Whom", "Whose", "Which"], 2, "Hỏi về quyền sở hữu.", "'Whose' dùng để hỏi của ai."));
+    allQs.push(makeQ("WhQuestion", "_____ much does it cost to deploy this server onto Render?", ["What", "How", "Why", "Where"], 1, "Cấu trúc hỏi về giá tiền/chi phí.", "'How much' dùng để hỏi giá cả."));
+    allQs.push(makeQ("WhQuestion", "_____ one do you prefer, Python or JavaScript?", ["What", "Whose", "Which", "How"], 2, "Lựa chọn giữa một nhóm đối tượng cụ thể.", "'Which' dùng khi có sự lựa chọn giới hạn (Cái nào)."));
+    allQs.push(makeQ("WhQuestion", "_____ far is it from Binh Duong University to your house?", ["How", "What", "Where", "Why"], 0, "Cấu trúc hỏi về độ dài khoảng cách.", "'How far' dùng để hỏi bao xa."));
+
+    // 5. VocabTravel (8 câu)
+    allQs.push(makeQ("VocabTravel", "You pack clothes in a ______ when you go away.", ["backpack", "guidebook", "suitcase", "sunglasses"], 2, "Đồ vật hình hộp dùng chứa quần áo du lịch.", "'suitcase' là vali đựng quần áo."));
+    allQs.push(makeQ("VocabTravel", "We booked an early ferry, so we ______ off at 5 am.", ["took", "turned", "set", "walked"], 2, "Cụm động từ chỉ sự khởi hành hành trình.", "'set off' mang nghĩa khởi hành chuyến đi."));
+    allQs.push(makeQ("VocabTravel", "The plane ______ off half an hour earlier than scheduled.", ["took", "set", "turned", "got"], 0, "Động từ cất cánh của máy bay.", "Cụm 'take off' (quá khứ: took off) là máy bay cất cánh."));
+    allQs.push(makeQ("VocabTravel", "I need to show my valid _____ to travel internationally.", ["ticket", "receipt", "passport", "guidebook"], 2, "Sổ thông hành quốc gia bắt buộc.", "'passport' là hộ chiếu để xuất nhập cảnh."));
+    allQs.push(makeQ("VocabTravel", "The hotel _____ in Jakarta was extremely comfortable.", ["accommodation", "destination", "sightseeing", "journey"], 0, "Từ tổng quát chỉ nơi ăn chốn ở.", "'accommodation' là chỗ ở/nơi trú ngụ."));
+    allQs.push(makeQ("VocabTravel", "We bought a local _____ to find the best food spots.", ["suitcase", "guidebook", "backpack", "ticket"], 1, "Sách chỉ dẫn thông tin địa điểm.", "'guidebook' là sách hướng dẫn du lịch."));
+    allQs.push(makeQ("VocabTravel", "Missed our ______ due to a massive traffic jam near the airport.", ["flight", "fly", "flying", "flew"], 0, "Danh từ chỉ chuyến bay.", "'flight' nghĩa là chuyến bay."));
+    allQs.push(makeQ("VocabTravel", "We decided to explore the entire old town _____ foot.", ["by", "in", "on", "at"], 2, "Cụm từ chỉ phương thức đi bộ.", "Cụm cố định luôn là 'on foot' (đi bộ)."));
+
+    // 6. VocabMoney (8 câu)
+    allQs.push(makeQ("VocabMoney", "Can you ______ me ten euros until tomorrow morning?", ["borrow", "lend", "afford", "owe"], 1, "Hành động trao cho người khác mượn.", "'lend' có nghĩa là cho mượn."));
+    allQs.push(makeQ("VocabMoney", "I need to ______ up money if I want to buy a new graphic card.", ["save", "spend", "lend", "borrow"], 0, "Hành động tích lũy ngân sách.", "Cụm 'save up' là tiết kiệm tiền."));
+    allQs.push(makeQ("VocabMoney", "I cannot _____ to buy that luxury mechanical keyboard.", ["owe", "afford", "discount", "lend"], 1, "Đủ tiềm lực tài chính để chi trả.", "'afford' nghĩa là có khả năng chi trả."));
+    allQs.push(makeQ("VocabMoney", "He had to _____ cash from Tuan Anh to buy a coffee.", ["lend", "owe", "borrow", "save"], 2, "Hành động đi vay, mượn từ người khác.", "'borrow' nghĩa là vay/mượn về."));
+    allQs.push(makeQ("VocabMoney", "I still _____ him 100k for the lunch yesterday.", ["owe", "lend", "borrow", "afford"], 0, "Tình trạng đang mắc nợ ai đó.", "'owe' nghĩa là nợ tiền ai đó."));
+    allQs.push(makeQ("VocabMoney", "I got a huge 50% _____ on this software license during Black Friday.", ["receipt", "discount", "balance", "tip"], 1, "Sự sụt giảm giá tiền.", "'discount' là sự giảm giá."));
+    allQs.push(makeQ("VocabMoney", "Please keep your _____ to check the code product again later.", ["receipt", "bill", "menu", "cash"], 0, "Hóa đơn giấy thanh toán.", "'receipt' là biên lai/hóa đơn."));
+    allQs.push(makeQ("VocabMoney", "How much is the remaining _____ in your digital wallet?", ["discount", "receipt", "balance", "offer"], 2, "Số dư tài khoản hiện hữu.", "'balance' là số dư tài khoản."));
+
+    // 7. Collocation (8 câu)
+    allQs.push(makeQ("Collocation", "I want to ______ volunteer work for a charity this summer.", ["make", "give", "do", "have"], 2, "Động từ đi liền với danh từ 'work'.", "'do volunteer work' là làm công tác tình nguyện."));
+    allQs.push(makeQ("Collocation", "He ______ a funny joke and everyone laughed out loud.", ["did", "made", "gave", "told"], 1, "Cụm từ cố định mang nghĩa kể chuyện cười.", "Cụm từ cố định: 'make a joke' (quá khứ: made)."));
+    allQs.push(makeQ("Collocation", "You should ______ your database backup before writing new queries.", ["make", "do", "take", "get"], 1, "Thực hiện một hành động/nhiệm vụ.", "'do' đi với bài tập/nhiệm vụ: 'do backup/homework'."));
+    allQs.push(makeQ("Collocation", "Can you _____ me a big favour and debug this function?", ["make", "do", "take", "give"], 1, "Cụm từ xin sự giúp đỡ từ người khác.", "Thành ngữ: 'do someone a favour' (giúp đỡ ai)."));
+    allQs.push(makeQ("Collocation", "I need to _____ a quick phone call to our project mentor.", ["do", "have", "make", "take"], 2, "Cụm từ thực hiện cuộc gọi.", "Cấu trúc cố định: 'make a phone call'."));
+    allQs.push(makeQ("Collocation", "The developer always _____ his best to meet the sprint deadline.", ["makes", "does", "takes", "gets"], 1, "Nỗ lực tối đa.", "Cụm cố định: 'do one's best' (nỗ lực hết sức)."));
+    allQs.push(makeQ("Collocation", "It is very easy to _____ new friends at university clubs.", ["do", "make", "take", "give"], 1, "Xây dựng mối quan hệ bạn bè.", "Cụm cố định: 'make friends' (kết bạn)."));
+    allQs.push(makeQ("Collocation", "Please don't _____ a noise in the server room.", ["do", "make", "create", "give"], 1, "Gây ra âm thanh ồn ào.", "Cụm từ cố định: 'make a noise'."));
+
+    // 8. Adjective (8 câu)
+    allQs.push(makeQ("Adjective", "It's a really ______ story. I didn't like it at all.", ["bored", "boring", "bore", "bores"], 1, "Tính từ chỉ bản chất của câu chuyện.", "Vật gây ra cảm giác dùng đuôi -ing: 'boring'."));
+    allQs.push(makeQ("Adjective", "I am very ______ in learning full-stack web development with Django.", ["interest", "interesting", "interested", "interests"], 2, "Tính từ đuôi thể hiện cảm xúc con người.", "Con người nhận cảm xúc dùng đuôi -ed: 'interested'."));
+    allQs.push(makeQ("Adjective", "The software engineering lecture was so _____ that I fell asleep.", ["bored", "boring", "tired", "tiring"], 1, "Bản chất của bài học gây nhàm chán.", "Bài học vật thể dùng đuôi -ing: 'boring'."));
+    allQs.push(makeQ("Adjective", "We were completely _____ by the sudden crash of the production server.", ["amaze", "amazing", "amazed", "amazes"], 2, "Cảm xúc kinh ngạc/bàng hoàng của con người.", "Chỉ cảm xúc của chủ ngữ 'We' dùng 'amazed'."));
+    allQs.push(makeQ("Adjective", "The tech news about the new AI chip was truly _____.", ["shocked", "shocking", "shock", "shocks"], 1, "Bản chất của tin tức công nghệ.", "Tin tức (vật) dùng đuôi -ing: 'shocking'."));
+    allQs.push(makeQ("Adjective", "Are you _____ of fixing code bugs at midnight?", ["frighten", "frightening", "frightened", "frights"], 2, "Cảm xúc sợ hãi của người nghe.", "Cảm xúc người dùng đuôi -ed: 'frightened'."));
+    allQs.push(makeQ("Adjective", "This documentation is very _____; you should definitely read it.", ["interest", "interesting", "interested", "interests"], 1, "Bản chất của tài liệu hướng dẫn.", "Tài liệu dùng đuôi -ing: 'interesting'."));
+    allQs.push(makeQ("Adjective", "The long coding session throughout the weekend was highly _____.", ["exhausted", "exhausting", "exhaust", "exhausts"], 1, "Tính chất gây kiệt sức của buổi code dài.", "Sự việc dùng đuôi -ing: 'exhausting'."));
+
+    // 9. Comparative (8 câu)
+    allQs.push(makeQ("Comparative", "Do you have anything ______ than this model?", ["cheap", "cheaper", "cheapest", "cheaply"], 1, "So sánh hơn tính từ ngắn 'cheap'.", "Tính từ ngắn thêm đuôi -er thành 'cheaper'."));
+    allQs.push(makeQ("Comparative", "This frontend framework is much ______ than the previous one.", ["good", "better", "best", "more good"], 1, "Dạng so sánh hơn bất quy tắc của 'good'.", "'good' đổi thành 'better' trong câu so sánh hơn."));
+    allQs.push(makeQ("Comparative", "My backend server is running much _____ than it did last week.", ["fast", "faster", "fastest", "more fast"], 1, "So sánh hơn của trạng từ/tính từ ngắn 'fast'.", "Thêm đuôi -er thành 'faster'."));
+    allQs.push(makeQ("Comparative", "Developing AI systems is _____ difficult than simple static webs.", ["much", "more", "most", "many"], 1, "So sánh hơn với tính từ dài 'difficult'.", "Tính từ dài dùng cấu trúc: 'more + Adj'."));
+    allQs.push(makeQ("Comparative", "The React application is _____ responsive than the old raw HTML one.", ["more", "much", "most", "very"], 0, "So sánh hơn tính từ dài 'responsive'.", "Dùng từ 'more'."));
+    allQs.push(makeQ("Comparative", "Today the network latency is even _____ than yesterday.", ["bad", "worse", "worst", "more bad"], 1, "Dạng so sánh hơn bất quy tắc của 'bad'.", "'bad' biến đổi thành 'worse'."));
+    allQs.push(makeQ("Comparative", "A cloud server is _____ useful than a physical local hard drive.", ["many", "much", "more", "most"], 2, "So sánh hơn tính từ dài 'useful'.", "Dùng từ 'more'."));
+    allQs.push(makeQ("Comparative", "Your English fluency is getting _____ and better day by day!", ["good", "better", "best", "well"], 1, "Cấu trúc so sánh lũy tiến (ngày càng).", "Cấu trúc: 'better and better' (ngày càng tốt hơn)."));
+
+    // 10. Preposition & Connectors (8 câu)
+    allQs.push(makeQ("Preposition", "We're ______ for a new open-source package to handle GIS.", ["seeing", "watching", "looking", "finding"], 2, "Cụm động từ mang nghĩa tìm kiếm.", "Phrasal verb 'look for' mang nghĩa tìm kiếm."));
+    allQs.push(makeQ("Preposition", "I used PostgreSQL ______ it integrates perfectly with spatial data.", ["so", "but", "when", "because"], 3, "Từ nối chỉ nguyên nhân, lý do vế sau.", "'because' giải thích nguyên nhân đứng trước một mệnh đề lý do."));
+    allQs.push(makeQ("Preposition", "The script completed successfully, _____ I am happy with the result.", ["because", "so", "but", "when"], 1, "Từ nối chỉ kết quả, hệ quả.", "'so' (vì thế) đứng trước mệnh đề kết quả."));
+    allQs.push(makeQ("Preposition", "I learned full-stack coding _____ 2024.", ["in", "on", "at", "to"], 0, "Giới từ đi liền trước năm số.", "Luôn dùng giới từ 'in' trước năm."));
+    allQs.push(makeQ("Preposition", "The sprint reviews take place _____ Fridays.", ["in", "on", "at", "by"], 1, "Giới từ đứng trước các thứ trong tuần.", "Dùng giới từ 'on' trước ngày/thứ trong tuần."));
+    allQs.push(makeQ("Preposition", "The server deployment starts automatedly _____ midnight.", ["in", "on", "at", "during"], 2, "Giới từ đi với điểm thời gian hoặc mốc giờ cố định.", "Dùng 'at' trước giờ giấc/mốc thời gian cụ thể như 'at midnight'."));
+    allQs.push(makeQ("Preposition", "Hao is exceptionally good _____ setting up Jira pipelines.", ["in", "on", "at", "with"], 2, "Giới từ đi theo sau tính từ 'good'.", "Cấu trúc cố định: 'good at' (giỏi về lĩnh vực gì)."));
+    allQs.push(makeQ("Preposition", "We are waiting _____ the API feedback from the server backend.", ["to", "for", "at", "on"], 1, "Giới từ đi kèm động từ 'wait'.", "Cấu trúc: 'wait for someone/something' (chờ đợi cái gì)."));
+
+    // 11. FutureArrangement (8 câu) - NEW UNIT 4
+    allQs.push(makeQ("FutureArrangement", "I ______ the hairdresser's tomorrow at 10 AM; I already booked it.", ["visit", "am visiting", "will visit", "visited"], 1, "Hành động đã được đặt lịch hẹn trước cố định.", "Dùng Hiện tại tiếp diễn cho kế hoạch đã chắc chắn/đặt chỗ trước (`arrangements`)."));
+    allQs.push(makeQ("FutureArrangement", "My friends ______ early tomorrow morning. Their flight ticket is confirmed.", ["arrive", "are arriving", "arrived", "will arrive"], 1, "Sắp xếp chắc chắn có vé máy bay xác minh.", "Sự sắp xếp chắc chắn dùng Hiện tại tiếp diễn: 'are arriving'."));
+    allQs.push(makeQ("FutureArrangement", "We _____ dinner with the tech mentor at 7 PM tonight.", ["have", "are having", "had", "will have"], 1, "Cuộc hẹn ăn tối đã lên lịch cụ thể.", "Lịch trình cá nhân đã chốt dùng hiện tại tiếp diễn: 'are having'."));
+    allQs.push(makeQ("FutureArrangement", "I _____ Python classes next Monday. I've already paid the tuition fee.", ["start", "am starting", "started", "going to start"], 1, "Đã trả tiền học phí, hành động chắc chắn diễn ra.", "Đã sắp xếp chốt lịch: 'am starting'."));
+    allQs.push(makeQ("FutureArrangement", "What time _____ you _____ Tuan Anh this weekend?", ["do / meet", "are / meeting", "will / meet", "have / met"], 1, "Hỏi về lịch trình hẹn gặp cụ thể.", "Câu hỏi về sự sắp xếp tương lai: 'are / meeting'."));
+    allQs.push(makeQ("FutureArrangement", "She _____ to London next Tuesday; she just bought the ticket.", ["flies", "is flying", "will fly", "flew"], 1, "Đã mua vé máy bay, lịch trình cố định.", "Dùng Hiện tại tiếp diễn chỉ lịch chốt: 'is flying'."));
+    allQs.push(makeQ("FutureArrangement", "They _____ a project presentation tomorrow morning at Room 302.", ["give", "are giving", "gave", "will give"], 1, "Lịch thuyết trình cố định của trường học.", "Sự việc tương lai đã lên lịch: 'are giving'."));
+    allQs.push(makeQ("FutureArrangement", "I can't play games tonight. I _____ for the English B1 exam with Thang.", ["study", "am studying", "studied", "will study"], 1, "Hẹn học bài đã chốt lịch tối nay.", "Hiện tại tiếp diễn làm lý do chốt tương lai: 'am studying'."));
+
+    // 12. FutureIntention (8 câu) - NEW UNIT 4
+    allQs.push(makeQ("FutureIntention", "We ______ to stay at home the whole night this Saturday.", ["are going", "will", "go", "am"], 0, "Dự định, ý định từ trước (Intention).", "Cấu trúc dự định tương lai: 'be going to + V' -> 'are going to stay'."));
+    allQs.push(makeQ("FutureIntention", "_____ you ______ to clear your browser data tonight?", ["Do / intend", "Are / going", "Will / go", "Have / gone"], 1, "Hỏi về ý định, dự kiến chủ quan của người nghe.", "Cấu trúc dự định: 'Are you going to'."));
+    allQs.push(makeQ("FutureIntention", "I am _____ to study Mandarin Chinese when this semester ends.", ["going", "will", "intending", "about"], 0, "Ý định tự đặt ra cho bản thân.", "Dự định cá nhân chưa lên lịch chốt: 'going to'."));
+    allQs.push(makeQ("FutureIntention", "He is _____ to learn React Vite to enhance his frontend skill.", ["going", "will", "go", "wanted"], 0, "Dự kiến học kỹ năng mới.", "Cấu trúc tương lai dự định: 'is going to'."));
+    allQs.push(makeQ("FutureIntention", "We are _____ to build a food ordering website called 'Alo Do Uong'.", ["going", "will", "planning", "making"], 0, "Ý định phát triển dự án mới.", "Cấu trúc ý định tương lai: 'are going to'."));
+    allQs.push(makeQ("FutureIntention", "They are _____ to stop smoking to improve their general well-being.", ["going", "will", "about", "decide"], 0, "Quyết tâm/dự định thay đổi thói quen.", "Dùng 'going to' chỉ ý định từ trước."));
+    allQs.push(makeQ("FutureIntention", "_____ he _____ to upgrade his phone to iPhone 15?", ["Is / going", "Does / go", "Will / be", "Has / gone"], 0, "Hỏi về dự định mua sắm của anh ấy.", "Câu hỏi ý định: 'Is he going to'."));
+    allQs.push(makeQ("FutureIntention", "I'm not _____ to leave the house this Sunday; I need to rest.", ["going", "will", "want", "intending"], 0, "Dự định phủ định trong tương lai.", "Phủ định dự định: 'not going to'."));
+
+    // 13. WillWonShall (8 câu) - NEW UNIT 4
+    allQs.push(makeQ("WillWonShall", "A: What would you like to drink? B: I ______ a lemonade, please.", ["have", "am having", "will have", "going to have"], 2, "Quyết định đưa ra ngay tại thời điểm nói.", "Quyết định tức thì trong nhà hàng dùng 'will' -> 'I'll have'."));
+    allQs.push(makeQ("WillWonShall", "Don't worry, I promise I ______ late for the technical sprint meeting.", ["will be", "am not", "won't be", "not going to be"], 2, "Lời hứa (promise) trong tương lai.", "Đi với 'I promise', cấu trúc dùng 'won't' cho phủ định lời hứa."));
+    allQs.push(makeQ("WillWonShall", "_____ we go for a coffee after the film finishes?", ["Will", "Shall", "Do", "Are"], 1, "Lời gợi ý, đề nghị lịch sự làm một việc gì đó cùng nhau.", "Cấu trúc gợi ý làm việc chung: 'Shall we + V'."));
+    allQs.push(makeQ("WillWonShall", "I _____ get you something to eat or drink if you are hungry.", ["will", "shall", "going to", "am"], 0, "Lời đề nghị giúp đỡ (offer) tự nguyện.", "Đưa ra lời đề nghị giúp đỡ tức thì: 'I'll/I will'."));
+    allQs.push(makeQ("WillWonShall", "I promise I _____ look up the database configuration right away.", ["will", "won't", "shall", "going to"], 0, "Lời hứa khẳng định đi với 'I promise'.", "Lời hứa khẳng định dùng 'will'."));
+    allQs.push(makeQ("WillWonShall", "A: The phone is ringing. B: Don't worry, I _____ answer it.", ["will", "am going to", "shall", "answering"], 0, "Quyết định hành động tức thời khi sự việc đột xuất xảy ra.", "Quyết định ngay lúc nói dùng 'will'."));
+    allQs.push(makeQ("WillWonShall", "_____ I carry this heavy computer tower for you, sir?", ["Shall", "Will", "Do", "Would"], 0, "Lời đề nghị giúp đỡ người khác (ngôi thứ nhất số ít).", "Đề nghị giúp đỡ lịch sự: 'Shall I...?'"));
+    allQs.push(makeQ("WillWonShall", "I am pretty sure she _____ cancel the plan; she generally does.", ["will", "won't", "is going to", "shall"], 0, "Dự đoán chủ quan dựa trên thói quen cũ.", "Dự đoán chủ quan dùng 'will'."));
+
+    // 14. VocabClothes (8 câu) - NEW UNIT 4
+    allQs.push(makeQ("VocabClothes", "He wore a smart suit and a silk ______ around his neck to the interview.", ["tights", "bracelet", "tie", "tracksuit"], 2, "Phụ kiện thắt ở cổ áo khi mặc vest lịch sự.", "'tie' là cà vạt nam."));
+    allQs.push(makeQ("VocabClothes", "She is wearing beautiful gold ______ in her ears.", ["bracelets", "earrings", "scarves", "sandals"], 1, "Trang sức đeo ở tai.", "'earrings' là bông tai/khuyên tai."));
+    allQs.push(makeQ("VocabClothes", "It was very cold, so she wrapped a warm woollen _____ around her neck.", ["tie", "scarf", "top", "tights"], 1, "Khăn quàng cổ giữ ấm mùa đông.", "'scarf' là khăn quàng cổ."));
+    allQs.push(makeQ("VocabClothes", "He wore a full comfortable ______ to the gym for training.", ["tracksuit", "tie", "high heels", "bracelet"], 0, "Bộ đồ thể thao gồm cả áo và quần đồng bộ.", "'tracksuit' là bộ đồ thể thao."));
+    allQs.push(makeQ("VocabClothes", "She loves wearing elegant _____ when attending formal evening parties.", ["sandals", "high heels", "tracksuit", "sweatshirt"], 1, "Giày cao gót của nữ giới.", "'high heels' là giày cao gót."));
+    allQs.push(makeQ("VocabClothes", "In summer, people prefer wearing open _____ instead of thick boots.", ["tights", "sandals", "sweatshirts", "ties"], 1, "Dép có quai hậu, thông thoáng chân vào mùa hè.", "'sandals' là dép xăng-đan."));
+    allQs.push(makeQ("VocabClothes", "She bought a shiny silver _____ to wear around her wrist.", ["bracelet", "earrings", "tie", "scarf"], 0, "Vòng trang sức đeo quanh cổ tay.", "'bracelet' là vòng đeo tay."));
+    allQs.push(makeQ("VocabClothes", "Women often wear nylon _____ under dresses in autumn.", ["tracksuits", "sweatshirts", "tights", "ties"], 2, "Quần tất bó sát chân giữ nhiệt hoặc làm đẹp.", "'tights' là quần tất nữ."));
+
+    // 15. PhrasalVerbLook (8 câu) - NEW UNIT 4
+    allQs.push(makeQ("PhrasalVerbLook", "I am really looking ______ to the weekend after a long week of code.", ["after", "forward", "up", "around"], 1, "Cụm từ mong đợi, trông ngóng một sự kiện tương lai.", "Cấu trúc: 'look forward to + Ving/Noun' (mong đợi)."));
+    allQs.push(makeQ("PhrasalVerbLook", "Can you help me? I need to look ______ this Python error code online.", ["after", "up", "around", "at"], 1, "Hành động tra cứu thông tin trong sách/máy tính.", "'look up' nghĩa là tra cứu từ điển/thông tin."));
+    allQs.push(makeQ("PhrasalVerbLook", "My mother is retired, so she spends time looking ______ her grandchildren.", ["after", "forward", "up", "around"], 0, "Hành động chăm sóc người/vật.", "'look after' nghĩa là chăm sóc, trông nom."));
+    allQs.push(makeQ("PhrasalVerbLook", "I spend too much time looking _____ social media sites on my phone.", ["at", "to", "for", "after"], 0, "Hành động nhìn ngắm, xem một thứ gì đó.", "'look at' nghĩa là nhìn vào."));
+    allQs.push(makeQ("PhrasalVerbLook", "I always look _____ special offers when I go technology shopping.", ["for", "after", "up", "around"], 0, "Hành động tìm kiếm cơ hội/ưu đãi.", "'look for' nghĩa là tìm kiếm."));
+    allQs.push(makeQ("PhrasalVerbLook", "I love looking _____ clothes shops, even when I buy nothing.", ["after", "around", "up", "forward"], 1, "Hành động đi dạo quanh ngắm nghía cửa hàng.", "'look around' nghĩa là đi tham quan dạo quanh."));
+    allQs.push(makeQ("PhrasalVerbLook", "You look _____ when you don't get much sleep at night.", ["like", "tired", "forward", "after"], 1, "Miêu tả trạng thái diện mạo bên ngoài của ai đó.", "Động từ 'look + Adj' chỉ diện mạo, dáng vẻ."));
+    allQs.push(makeQ("PhrasalVerbLook", "This new framework sounds _____ Django, but it is built in Node.js.", ["like", "after", "up", "around"], 0, "Cấu trúc so sánh nghe có vẻ giống như.", "Cấu trúc: 'sound like' (nghe có vẻ giống như)."));
+
+    // PHÂN BỔ ĐỀU CÂN BẰNG TOÀN BỘ 120 CÂU VÀO 6 ĐỀ THI KHÁC BIỆT
+    const db = {
+        trungbinh: { de1: [], de2: [] },
+        kha: { de1: [], de2: [] },
+        kho: { de1: [], de2: [] }
+    };
+    
+    const allTests = [db.trungbinh.de1, db.trungbinh.de2, db.kha.de1, db.kha.de2, db.kho.de1, db.kho.de2];
+    
+    for (let i = 0; i < 20; i++) { allTests[0].push(allQs[i]); }
+    for (let i = 20; i < 40; i++) { allTests[1].push(allQs[i]); }
+    for (let i = 40; i < 60; i++) { allTests[2].push(allQs[i]); }
+    for (let i = 60; i < 80; i++) { allTests[3].push(allQs[i]); }
+    for (let i = 80; i < 100; i++) { allTests[4].push(allQs[i]); }
+    for (let i = 100; i < 120; i++) { allTests[5].push(allQs[i]); }
+
+    // --- BIẾN TOÀN CỤC HỆ THỐNG ---
+    let users = JSON.parse(localStorage.getItem('quiz_users')) || [];
+    users = users.map(u => {
+        if (!u.stats) {
+            u.loginCount = 0;
+            u.stats = { trungbinh: { attempted: 0, correct: 0 }, kha: { attempted: 0, correct: 0 }, kho: { attempted: 0, correct: 0 } };
+        }
+        return u;
+    });
+
+    let currentUser = null;
+    let currentLevel = '';
+    let currentDe = 0;
+    
+    let quizQuestions = [];
+    let qIndex = 0;
+    let currentScore = 0;
+    let isAnswered = false;
+    let selectedOpt = null;
+    let answeredCount = 0;
+    let userAnswers = [];
+
+    // --- QUẢN LÝ MÀN HÌNH CHUYỂN ĐỔI ---
+    function switchScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    // --- TÍNH NĂNG QUÊN MẬT KHẨU ---
+    function forgotPassword() {
+        const mssv = prompt("Vui lòng nhập Mã số sinh viên của bạn:");
+        if (!mssv) return;
+        
+        const user = users.find(u => u.mssv === mssv);
+        if (user) {
+            const name = prompt("Vui lòng nhập chính xác Họ và tên đã đăng ký:");
+            if (name && user.name.toLowerCase() === name.toLowerCase().trim()) {
+                alert("Thành công! Mật khẩu của bạn là: " + user.pass);
+            } else {
+                alert("Họ và tên không khớp với hệ thống!");
+            }
+        } else {
+            alert("Không tìm thấy sinh viên có MSSV này!");
+        }
+    }
+
+    // --- XỬ LÝ AUTHENTICATION ---
+    function initAuth() {
+        const savedMssv = localStorage.getItem('quiz_current_user');
+        if (savedMssv === 'ADMIN') {
+            renderAdminStats();
+            switchScreen('admin-screen');
+            return;
+        }
+
+        if (savedMssv) {
+            const user = users.find(u => u.mssv === savedMssv);
+            if (user) {
+                currentUser = user;
+                updateDashboard();
+                switchScreen('dashboard-screen');
+                return;
+            }
+        }
+        switchScreen('login-screen');
+    }
+
+    function register() {
+        const mssv = document.getElementById('reg-mssv').value.trim();
+        const name = document.getElementById('reg-name').value.trim();
+        const gender = document.getElementById('reg-gender').value;
+        const pass = document.getElementById('reg-password').value;
+
+        if(!mssv || !name || !pass) { alert("Vui lòng nhập đủ thông tin!"); return; }
+        if(users.find(u => u.mssv === mssv)) { alert("Tên đăng nhập / MSSV này đã tồn tại!"); return; }
+
+        const newUser = {
+            mssv, name, gender, pass, loginCount: 1, 
+            progress: { trungbinh: { 1: false, 2: false }, kha: { 1: false, 2: false }, kho: { 1: false, 2: false } },
+            stats: { trungbinh: { attempted: 0, correct: 0 }, kha: { attempted: 0, correct: 0 }, kho: { attempted: 0, correct: 0 } }
+        };
+        users.push(newUser);
+        localStorage.setItem('quiz_users', JSON.stringify(users));
+        
+        currentUser = newUser;
+        localStorage.setItem('quiz_current_user', mssv);
+        alert("Đăng ký thành công!");
+        updateDashboard();
+        switchScreen('dashboard-screen');
+    }
+
+    function login() {
+        const mssv = document.getElementById('login-mssv').value.trim();
+        const pass = document.getElementById('login-password').value;
+
+        // CỔNG ADMIN BÍ MẬT CỦA SÁNG LẬP VIÊN THANH HÀO
+        if (mssv === "Thanh Hào" && pass === "123456789") {
+            localStorage.setItem('quiz_current_user', 'ADMIN');
+            renderAdminStats();
+            switchScreen('admin-screen');
+            return;
+        }
+
+        const userIndex = users.findIndex(u => u.mssv === mssv && u.pass === pass);
+        if (userIndex !== -1) {
+            users[userIndex].loginCount = (users[userIndex].loginCount || 0) + 1;
+            localStorage.setItem('quiz_users', JSON.stringify(users));
+
+            currentUser = users[userIndex];
+            localStorage.setItem('quiz_current_user', mssv);
+            updateDashboard();
+            switchScreen('dashboard-screen');
+        } else {
+            alert("Thông tin đăng nhập hoặc mật khẩu không chính xác!");
+        }
+    }
+
+    function logout() {
+        currentUser = null;
+        localStorage.removeItem('quiz_current_user');
+        switchScreen('login-screen');
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-mssv').value = '';
+    }
+
+    // --- BẢNG ĐIỀU KHIỂN CỦA QUẢN TRỊ VIÊN ---
+    function renderAdminStats() {
+        document.getElementById('admin-total-users').innerText = users.length;
+        let totalLogins = 0;
+        let tbAtt = 0, tbCor = 0, khaAtt = 0, khaCor = 0, khoAtt = 0, khoCor = 0;
+        
+        const usersListContainer = document.getElementById('admin-users-list');
+        usersListContainer.innerHTML = '';
+
+        if (users.length === 0) {
+            usersListContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Chưa có dữ liệu học viên tham gia.</p>';
+        }
+
+        users.forEach((u, index) => {
+            totalLogins += (u.loginCount || 0);
+            tbAtt += u.stats.trungbinh.attempted; tbCor += u.stats.trungbinh.correct;
+            khaAtt += u.stats.kha.attempted; khaCor += u.stats.kha.correct;
+            khoAtt += u.stats.kho.attempted; khoCor += u.stats.kho.correct;
+
+            let uTotalA = u.stats.trungbinh.attempted + u.stats.kha.attempted + u.stats.kho.attempted;
+            let uTotalC = u.stats.trungbinh.correct + u.stats.kha.correct + u.stats.kho.correct;
+            
+            const card = document.createElement('div');
+            card.className = 'admin-user-card';
+            card.innerHTML = `
+                <h4>👤 ${u.name} <span style="color: var(--text-muted); font-size: 0.8em; float: right;">STT: #${index + 1}</span></h4>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9em; flex-wrap: wrap; gap: 10px;">
+                    <span><strong>MSSV:</strong> <span style="color: #fff;">${u.mssv}</span></span>
+                    <span><strong>Giới tính:</strong> ${u.gender === 'nam' ? 'Nam 👨‍💻' : 'Nữ 👩‍💻'}</span>
+                    <span><strong>🔑 Mật khẩu:</strong> <span class="text-warning">${u.pass}</span></span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9em; flex-wrap: wrap; gap: 10px; margin-top: 5px;">
+                    <span><strong>Lượt Login:</strong> <span class="text-warning">${u.loginCount || 1} lần</span></span>
+                </div>
+                <div class="admin-user-stats">
+                    <div><span style="color: #fff; font-weight: bold;">Trung Bình</span><br>Làm: ${u.stats.trungbinh.attempted} | Đúng: <span class="text-correct">${u.stats.trungbinh.correct}</span></div>
+                    <div><span style="color: var(--neon-pink); font-weight: bold;">Khá</span><br>Làm: ${u.stats.kha.attempted} | Đúng: <span class="text-correct">${u.stats.kha.correct}</span></div>
+                    <div><span style="color: var(--neon-green); font-weight: bold;">Khó</span><br>Làm: ${u.stats.kho.attempted} | Đúng: <span class="text-correct">${u.stats.kho.correct}</span></div>
+                </div>
+                <div style="margin-top: 5px; font-size: 1.1em; text-align: right;">
+                    <strong>Tổng kết tiến trình câu đúng:</strong> <span style="color: var(--neon-yellow);">${uTotalC} / ${uTotalA}</span>
+                </div>
+            `;
+            usersListContainer.appendChild(card);
+        });
+
+        document.getElementById('admin-total-logins').innerText = totalLogins;
+        document.getElementById('admin-tb-attempted').innerText = tbAtt;
+        document.getElementById('admin-tb-correct').innerText = tbCor;
+        document.getElementById('admin-kha-attempted').innerText = khaAtt;
+        document.getElementById('admin-kha-correct').innerText = khaCor;
+        document.getElementById('admin-kho-attempted').innerText = khoAtt;
+        document.getElementById('admin-kho-correct').innerText = khoCor;
+    }
+
+    // --- CẬP NHẬT TIẾN ĐỘ SINH VIÊN ---
+    function updateDashboard() {
+        document.getElementById('user-name').innerText = currentUser.name;
+        document.getElementById('user-mssv').innerText = `MSSV: ${currentUser.mssv}`;
+        document.getElementById('user-avatar').innerText = currentUser.gender === 'nu' ? '👩‍💻' : '👨‍💻';
+
+        let totalCompleted = 0;
+        ['trungbinh', 'kha', 'kho'].forEach(lv => {
+            let count = 0;
+            if(currentUser.progress[lv][1]) count++;
+            if(currentUser.progress[lv][2]) count++;
+            let percent = (count / 2) * 100;
+            document.getElementById(`prog-text-${lv}`).innerText = `${percent}%`;
+            document.getElementById(`prog-bar-${lv}`).style.width = `${percent}%`;
+            totalCompleted += count;
+        });
+
+        if (totalCompleted === 6) {
+            setTimeout(() => { document.getElementById('congrats-overlay').style.display = 'flex'; }, 500);
+        }
+    }
+
+    const levelNames = { trungbinh: "Trung Bình", kha: "Khá", kho: "Khó" };
+
+    function openLevel(lv) {
+        currentLevel = lv;
+        document.getElementById('current-level-title').innerText = `Cấp độ: ${levelNames[lv]}`;
+        
+        const btn1 = document.getElementById('btn-de-1');
+        const btn2 = document.getElementById('btn-de-2');
+        if(currentUser.progress[lv][1]) btn1.classList.add('completed'); else btn1.classList.remove('completed');
+        if(currentUser.progress[lv][2]) btn2.classList.add('completed'); else btn2.classList.remove('completed');
+
+        switchScreen('test-select-screen');
+    }
+
+    // --- ĐIỀU PHỐI VÒNG THI (QUIZ CORES) ---
+    function startQuiz(de) {
+        currentDe = de;
+        const dataKey = de === 1 ? 'de1' : 'de2';
+        
+        quizQuestions = [...db[currentLevel][dataKey]].sort(() => Math.random() - 0.5);
+        qIndex = 0; currentScore = 0; answeredCount = 0;
+        userAnswers = new Array(20).fill(null);
+
+        document.getElementById('btn-submit-early').style.display = 'none';
+        switchScreen('quiz-screen');
+        loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+        isAnswered = false; selectedOpt = null;
+        const q = quizQuestions[qIndex];
+
+        document.getElementById('quiz-progress').innerText = `Câu ${qIndex + 1} / 20`;
+        document.getElementById('quiz-score').innerText = `Điểm: ${currentScore}`;
+        document.getElementById('quiz-question').innerText = q.q;
+
+        const optionsDiv = document.getElementById('quiz-options');
+        optionsDiv.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+            const div = document.createElement('div');
+            div.className = 'option'; div.innerText = opt;
+            div.onclick = () => selectQuizOption(idx, div);
+            optionsDiv.appendChild(div);
+        });
+
+        document.getElementById('quiz-hint-box').style.display = 'none';
+        document.getElementById('quiz-hint').innerText = q.hint;
+        document.getElementById('quiz-exp-box').style.display = 'none';
+        document.getElementById('quiz-exp').innerText = q.exp;
+        
+        document.getElementById('btn-check').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'none';
+        document.getElementById('btn-hint').style.display = 'block';
+    }
+
+    function toggleHint() {
+        const box = document.getElementById('quiz-hint-box');
+        box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function selectQuizOption(idx, el) {
+        if (isAnswered) return;
+        selectedOpt = idx;
+        const opts = document.querySelectorAll('#quiz-options .option');
+        opts.forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
+        document.getElementById('btn-check').style.display = 'block';
+    }
+
+    function checkAnswer() {
+        if (selectedOpt === null || isAnswered) return;
+        isAnswered = true; answeredCount++;
+
+        const q = quizQuestions[qIndex];
+        userAnswers[qIndex] = selectedOpt;
+        const opts = document.querySelectorAll('#quiz-options .option');
+        opts.forEach(o => o.classList.add('disabled'));
+
+        if (selectedOpt === q.a) {
+            opts[selectedOpt].classList.add('correct');
+            opts[selectedOpt].classList.remove('selected');
+            currentScore++;
+            document.getElementById('quiz-score').innerText = `Điểm: ${currentScore}`;
+        } else {
+            opts[selectedOpt].classList.add('wrong');
+            opts[selectedOpt].classList.remove('selected');
+            opts[q.a].classList.add('correct');
+        }
+
+        document.getElementById('quiz-exp-box').style.display = 'block';
+        document.getElementById('btn-check').style.display = 'none';
+        document.getElementById('btn-hint').style.display = 'none';
+        document.getElementById('btn-next').style.display = 'block';
+
+        if (answeredCount >= 10) {
+            document.getElementById('btn-submit-early').style.display = 'block';
+        }
+    }
+
+    function nextQuestion() {
+        if (qIndex === quizQuestions.length - 1) { submitQuiz(); } else { qIndex++; loadQuizQuestion(); }
+    }
+
+    function submitQuiz() {
+        document.getElementById('final-score').innerText = `Bạn đạt: ${currentScore} / 20 câu`;
+        switchScreen('result-screen');
+    }
+
+    function finishTest() {
+        if(answeredCount >= 10) {
+            currentUser.progress[currentLevel][currentDe] = true;
+            currentUser.stats[currentLevel].attempted += answeredCount;
+            currentUser.stats[currentLevel].correct += currentScore;
+
+            const userIndex = users.findIndex(u => u.mssv === currentUser.mssv);
+            users[userIndex] = currentUser;
+            localStorage.setItem('quiz_users', JSON.stringify(users));
+        }
+        updateDashboard();
+        switchScreen('test-select-screen'); 
+    }
+
+    // --- MÀN HÌNH XEM ĐIỂM CHI TIẾT ---
+    function showDetailedScore() {
+        const container = document.getElementById('detailed-score-container');
+        container.innerHTML = '';
+
+        quizQuestions.forEach((q, i) => {
+            const uAns = userAnswers[i];
+            const isUnanswered = (uAns === null);
+            const isCorrect = (uAns === q.a);
+            
+            const card = document.createElement('div');
+            card.className = `review-card ${isUnanswered ? 'unanswered' : ''}`;
+            
+            let statusHtml = '';
+            if (isUnanswered) statusHtml = `<p>Tình trạng: <span class="text-warning">Chưa trả lời</span></p>`;
+            else if (isCorrect) statusHtml = `<p>Bạn đã chọn: <span class="text-correct">${q.options[uAns]}</span></p>`;
+            else statusHtml = `<p>Bạn đã chọn: <span class="text-wrong">${q.options[uAns]}</span></p><p>Đáp án đúng: <span class="text-correct">${q.options[q.a]}</span></p>`;
+
+            card.innerHTML = `
+                <h4>Câu ${i + 1}: ${q.q}</h4>
+                ${statusHtml}
+                <div class="review-highlight"><strong>📖 Giải thích:</strong> ${q.exp}</div>
+            `;
+            container.appendChild(card);
+        });
+        switchScreen('detailed-score-screen');
+    }
+
+    // --- MÀN HÌNH TỔNG ÔN LÝ THUYẾT ---
+    function showReviewLesson() {
+        const container = document.getElementById('review-lesson-container');
+        container.innerHTML = '';
+
+        quizQuestions.forEach((q, i) => {
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <h4>Câu ${i + 1}: ${q.q}</h4>
+                <div class="review-topic"><strong>💡 Chủ điểm:</strong> ${q.reviewObj.title}</div>
+                <div class="review-detail"><strong>📖 Công thức:</strong> ${q.reviewObj.form}</div>
+                <div class="review-detail"><strong>🔍 Dấu hiệu:</strong> ${q.reviewObj.signs}</div>
+                <div class="review-detail" style="margin-top: 8px;"><strong>📝 Tổng ôn:</strong> ${q.reviewObj.summary}</div>
+                <div class="review-highlight"><strong>🎯 Áp dụng vào câu hỏi:</strong> ${q.exp}</div>
+            `;
+            container.appendChild(card);
+        });
+        switchScreen('review-lesson-screen');
+    }
+
+    window.onload = initAuth;
+</script>
+</body>
+</html>
